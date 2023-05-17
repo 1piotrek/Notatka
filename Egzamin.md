@@ -454,7 +454,23 @@ namespace Notatka // Note: actual namespace depends on the project name.
 ### TODO: Zrób ktoś kod z c++
 ---
 # 2. Aplikacje Mobilne
-## TODO: Zrób ten segment
+W tej części będzie opis środowiska xamarin oraz parę przykładów kodu z egzaminów zawodowych, nie będę sam dodawał javy/kotlina/flutter, jezeli ktoś chce dodac musi zrobic to na własną rękę
+
+---
+#### Krótki opis
+Xamarin wygląda prawie tak samo jak WPF jednak rózni się pod paroma względami. Hierachia plików taka sam.
+plik.xaml - wygląd aplikacji
+plik.cs - kod aplikacji
+
+---
+#### Rzeczy które na pewno będą
+1. W prawie kazdym egzaminie wymagane jest aby uzywac StackLayout, jego działanie jest bardzo proste. Kazdy element zabiera tyle przestrzeni wertykalnej ile potrzebuje, elementy układane są jeden pod drugim.
+2. Entry - w Xamarinie zamiast TextBlock mamy znacznik Entry. Działanie jest to samo
+3. Label - Jezeli chcemy dodac zwykły napis w xamarinie uzywamy znacznika Label, jest to ekwiwalent TextBox w WPF
+4. Zdjęcie - będziemy musieli dodac zdjęcie, jest to bardzo proste wystarczy je dodac do folderu. Szczególny opis dodawania zdjęcia znajdziemy w dalszej części.
+5. Operowanie na danych. Ono jest dosłownie takie same jak w WPF, nizej będzie przedstawiony przykład
+
+---
 
 
-
+# TODO: Wsztystko inne teraz mi sie nie chce
