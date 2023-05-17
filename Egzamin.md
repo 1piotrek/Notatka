@@ -35,7 +35,7 @@ int mn_index; //zmienna pomocnicza przechowująca indeks komórki
 ```
 * kod jest z komentarzami, więc nie powinno byc problemu w razie co aby go przerobic pod egzamin
 ##### Kod C#
-```C#
+```cs
         static int[] InsertionSort(int[] inputArray)
         {
             for (int i = 0; i < inputArray.Length - 1; i++)
@@ -73,7 +73,7 @@ Opis tego algorytmu równiez jest na egzaminie, jest on tam dobrze wytłumaczony
     
 ```
 #### Kod w C#
-```C#
+```cs
 //szukaj elementu x
 a[n] = x;
 i = 0;
@@ -142,7 +142,7 @@ int szukaj(int l, int p, long szukana)
 ```
 
 #### Kod C#
-```C#
+```cs
 public static object BinarySearchIterative(int[] inputArray, int key)  
 { 
   int min = 0;
@@ -181,7 +181,7 @@ void sortowanie_babelkowe(int tab[],int n)
 }
 ```
 #### Kod C#
-```c#
+```cs
    static void BubbleSort(int[] arr)
    {
       int n = arr.Length;
@@ -234,7 +234,7 @@ void quick_sort(int *tab, int lewy, int prawy)
 }
 ```
 #### Kod w C#
-```c#
+```cs
 public int[] SortArray(int[] array, int leftIndex, int rightIndex)
 {
     var i = leftIndex;
@@ -274,5 +274,187 @@ public int[] SortArray(int[] array, int leftIndex, int rightIndex)
 ```
 # TODO: jakieś inne algorytmy
 ---
-#### b) W tej części opisane będzie działanie klas, jak je napisac, czym są instancje, hermetyzacja itp.
+## Klasy
+Przypomnienie jak działają klasy, na czym polega hermetyzacja, dzedziczenie, instancje itp.
+
 ---
+## Tworzenie klas, instancji, konstruktory, metody
+
+```c++
+//c++
+class Osoba
+{
+public:
+    int wiek;
+    int wzrost;
+private: 
+    int nrKartyKredytowej;
+    
+public: 
+    Osoba()
+    {
+        ...
+        //Konstruktor bezparametrowy
+    }
+    Osoba(int wiekK, int wzrostK, int kartaK)
+    {
+        this.wiek = wiekK;
+        this.wzrost = wzrostK;
+        this.nrKartyKredytowej = kartaK;
+        //Konstruktor z parametrami
+    }
+};
+
+//Utworzenie instacji
+Osoba nazwainstancji;
+```
+* TODO: dodaj ktoś konstruktor kopiujący/wirtualny w c++ bo mi się nie chce i nie wiem jak to działa w tym języku
+```cs
+//C#
+public class Osoba
+{
+    static public int wiek;
+    static public int wzrost;
+    static private int nrKartyKredytowej;
+    //W c# zamiast konstruktorów mozna uzyc setterów
+    //public int wiek {get; set;}
+    //Jest to ekwiwalent
+    //Osoba(int wiekK) {this.wiek = wiekK}
+    Osoba()
+    {
+        ...
+        //Konstruktor bezparametrowy
+    }
+
+    Osoba(int wiekK, int wzrostK, int kartaK)
+    {
+        this.wiek = wiekK;
+        this.wzrost = wzrostK;
+        this.nrKartyKredytowej = kartaK;
+        //Konstruktor z parametrami
+    }
+
+    Osoba(Osoba poprzedniaOsoba)
+    {
+        this.wiek = poprzedniaOsoba.wiek;
+        this.wzrost = poprzedniaOsoba.wzrost;
+        this.nrKartyKredytowej = poprzedniaOsoba.nrKartyKredytowej
+        //Konstruktor kopiujący
+    }
+
+    public void Metoda()
+    {
+        //tutaj kod metody
+    }
+    public void MetodaZWielomaParametrami(params int[] wartosci)
+    {
+    int sum = 0;
+    foreach (int value in values)
+    {
+        sum += value;
+    }
+    return sum;
+    //Przykladowy kod
+    }
+}
+//Utworzenie instacji
+Osoba nazwaInstancji = new Osoba();
+```
+---
+## Dziedziczenie
+operator_widoczności może przyjmować jedną z trzech wartości: public, protected, private. Operator widoczności przy klasie, z której dziedziczymy pozwala ograniczyć widoczność elementów publicznych z klasy bazowej.
+1. public - oznacza, że dziedziczone elementy (np. zmienne lub funkcje) mają taką widoczność jak w klasie bazowej.
+2. protected - oznacza, że elementy publiczne zmieniają się w chronione.
+3. private - oznacza, że wszystkie elementy klasy bazowej zmieniają się w prywatne.
+4. brak operatora - oznacza, że niejawnie (domyślnie) zostanie wybrany operator private.
+
+W c++ schemat wygląda następująco:
+```c++
+   class nazwa_klasy :[operator_widocznosci] nazwa_klasy_bazowej, [operator_widocznosci] nazwa_klasy_bazowej ...
+   {
+        definicja_klasy
+   };
+
+   //przykład
+
+   class Nastolatek : private Osoba
+   {
+    public:
+        string Imie;
+        ...
+    //w tym przypadku pola dziedziczące np. wiek zamienia się w pole prywatne
+   }
+```
+
+Dziedziczenie w c# wygląda tak samo, jednak tutaj dodaje przedrostki i ich wytłumaczenie:
+
+##### Przedrostek "static":
+Przedrostek "static" oznacza, że dana metoda lub pole należy do klasy, a nie do instancji tej klasy. Oznacza to, że możesz odwoływać się do metody lub pola bez konieczności tworzenia obiektu klasy. Metody statyczne są wywoływane za pomocą składnika klasy, a nie instancji.
+
+##### Przedrostek "override":
+
+Przedrostek "override" jest używany w celu nadpisania metody zdefiniowanej w klasie bazowej. Oznacza to, że klasa pochodna dostarcza własną implementację dla metody, która jest już zdefiniowana w klasie bazowej. Metoda w klasie pochodnej musi mieć ten sam nagłówek (tzn. typ zwracany, nazwa i parametry) co metoda w klasie bazowej.
+
+##### Przedrostek "virtual":
+
+Przedrostek "virtual" jest używany w klasie bazowej do oznaczenia metody, która może być nadpisana w klasach pochodnych. Metoda w klasie bazowej, oznaczona jako "virtual", dostarcza podstawową implementację, ale klasy pochodne mogą ją nadpisać, jeśli jest to wymagane.
+
+##### Przedrostek "abstract":
+
+Przedrostek "abstract" jest używany do oznaczenia klasy lub metody abstrakcyjnej. Klasa abstrakcyjna służy jako szablon dla klas pochodnych, ale nie może być bezpośrednio instancjonowana. Metoda abstrakcyjna nie dostarcza implementacji w klasie bazowej i musi zostać zaimplementowana w klasie pochodnej.
+
+---
+## ARKUSZ INF.04 : 2022 - CZERWIEC - ZAD. 02 Zadanie Notatka
+Kod w c#
+```cs
+using System;
+
+namespace Notatka // Note: actual namespace depends on the project name.
+{
+    internal class Notatka
+    {
+        private static int liczbaNotatek = 0;
+        private int id = 0;
+        protected string tytul;
+        protected string tresc;
+
+        Notatka(string tytulK, string trescK)
+        {
+            liczbaNotatek++;
+            this.id = liczbaNotatek;
+            tytul = tytulK;
+            tresc = trescK;
+        }
+
+        public void wyswietl()
+        {
+            Console.WriteLine("Tytuł: " + tytul + "\nTreść: " + tresc);
+        }
+        public void diagnostyka()
+        {
+            Console.WriteLine(liczbaNotatek + ";" + id + ";" + tytul + ";" + ";" + tresc);  
+        }
+
+        static void Main(string[] args)
+        {
+            Notatka notatka1 = new Notatka("test1","tresc1");
+            Notatka notatka2 = new Notatka("test2", "tresc2");
+            notatka1.wyswietl();
+            notatka1.diagnostyka();
+            notatka2.wyswietl();
+            notatka2.diagnostyka();
+            Console.ReadKey();
+
+        }
+    }
+}
+```
+* Tutaj przykładowe zadanie skoncentrowane głównie na klasie, bez części z 3 zadania na egzaminie
+## TODO: Dokończ kod z zadaniem 3
+### TODO: Zrób ktoś kod z c++
+---
+# 2. Aplikacje Mobilne
+## TODO: Zrób ten segment
+
+
+
