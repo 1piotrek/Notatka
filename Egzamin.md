@@ -11,6 +11,20 @@ ___
 # 1.
 #### a) W tej części opisane będą algorytmy które wystąpiły juz w poprzednich egzaminach oraz te które mogą wystąpic
 ---
+##Generowanie liczb losowych
+##### Kod w C++
+```c++
+#include <stdlib.h> // niezbędne dla funkcji srand i rand
+#include <time.h> // niezbędne dla funkcji time
+ srand(time(NULL));
+ (rand() % 200) - 100 // w ten sposób uzyskuje się pseudolosowe liczby o zakresie od - 100 do 100
+```
+##### Kod C#
+```cs
+Random rnd = new Random();
+rnd.Next(10, 20) // zwraca losową liczbę w zakresie <10,20)
+```
+---
 ## Inf.04 2021 Czerwiec Sortowanie przez wybieranie
 
 Jak działa ten algorytm opisane jest na egzaminie, mieliśmy go juz wiele razy więc nie będę streszczał jego działania
@@ -346,7 +360,7 @@ public class Osoba
     {
         //tutaj kod metody
     }
-    public void MetodaZWielomaParametrami(params int[] wartosci)
+    public void MetodaZWielomaParametrami(params int[] values)
     {
     int sum = 0;
     foreach (int value in values)
@@ -473,4 +487,76 @@ plik.cs - kod aplikacji
 ---
 
 
-# TODO: Wsztystko inne teraz mi sie nie chce
+## W tej części będą przydatne snippety
+
+1. Lista
+    ```xml
+            <ListView x:Name="dupa" SeparatorColor="Crimson" SeparatorVisibility="Default">
+            <ListView.Header>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Entry Placeholder="Nowy element" HorizontalOptions="FillAndExpand" x:Name="entryDodaj"/>
+                    <Button Text="DODAJ" x:Name="btnDodaj" BackgroundColor="Crimson" TextColor="White" Clicked="btnDodaj_Clicked"/>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell TextColor="Black" Text="{Binding}"/>
+
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+
+        </ListView>
+    ```
+    oraz jej aktualizowanie w cs wraz z domyślnymi elementami
+    ```cs
+        List<string> listaZm = new List<string>
+        {
+                "weekend: kino, spacer z psem",
+                "Do zrobienia: obiad, umyć podłogi",
+                "Zakupy: chleb, masło, ser",
+        };
+        public MainPage()
+        {
+            InitializeComponent();
+
+            dupa.ItemsSource = listaZm;
+            
+        }
+
+        void btnDodaj_Clicked(System.Object sender, System.EventArgs e)
+        {
+            string nowyElement = entryDodaj.Text;
+            listaZm.Add(nowyElement); //dodajemy element do listy
+            dupa.ItemsSource = null; //refreshujemy liste w xaml (bez tego nie zobaczymy zmian w aplikacji)
+            dupa.ItemsSource = listaZm; //ustalamy kontent naszej listy w xaml aby odpiwiadał liscie w c#
+            entryDodaj.Text = ""; // resetujemy kontrolke do dodawania tekstu
+        }
+    ```
+2. Linia horyzontalna 
+    ```xml
+      <BoxView HorizontalOptions="FillAndExpand" WidthRequest="1" Color="#1690F4"/>
+    ```
+3. Dodawanie zdjęcia
+   Dodawanie zdjęcia w xamarinie jest bardzo proste, wystarczy ze zdjecie które chcemy dodac wstawimy do folderu:
+   Android/Resources/drawable
+     a następnie w miejscu w którym zdjęcie ma się pokazac dodamy tag:
+    ```xml
+    <Image Source="nazwaZdjecia.jpg">
+    ```
+4. Operowanie na zmiennych
+   Załózmy ze mamy w aplikacji kontrolkę label która zlicza ilośc kliknięc w przycisk aby to zrobic nasz kod będzie wyglądał w następujący sposób:
+   ```xml
+   <Label x:Name="kontrolka"></Label>
+   <Button Text="Kliknij mnie!" x:Name="btnClick" Click="btnClick_Clicked"/>
+   ```
+   Następnie w kodzie c#:
+   ```cs
+   int iloscKlikniec = 0;
+   void btnClick_Clicked(System.Object sender, System.EventArgs e)
+   {
+        iloscKlikniec++;
+        kontrolka.Text = iloscKlikniec.ToString();
+   }
+   ```
+   I to tyle, w taki sposób operujemy na danych, analogicznie do potrzebnej sytuacji
