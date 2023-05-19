@@ -544,6 +544,37 @@ plik.cs - kod aplikacji
     ```xml
     <Image Source="nazwaZdjecia.jpg">
     ```
+    Dodatkowo jeżeli chcemy zmenić zdjęcie gdy klikniemy w przycisk kod będzie wyglądał następująco
+    ```xml
+    <Image x:Name="myImage" Source="nazwa_poczatkowego_obrazka.png" />
+    <Button Text="Zmień obrazek" Clicked="Button_Clicked" />
+    ```
+
+    ```cs
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        // Zmiana źródła obrazka
+        myImage.Source = "nowa_nazwa_obrazka.png";
+    }
+    ```
+    A aby zrobić galerię z paroma zdjęciami możemy zrobić tablicę stringów oraz zmienną która określa którą scieżkę z tablicy wybieramy
+    ```cs
+    string[] sciezki = {"nowa_nazwa_obrazka1.png," "nowa_nazwa_obrazka2.png3", "nowa_nazwa_obrazka.png"}
+    int zdjecieNr = 0;
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+        if(zdjecieNr < 2)
+        {
+            zdjecieNr++;
+            myImage.Source = sciezki[zdjecieNr];
+        }
+        else
+        {
+            zdjecieNr = 0;
+            myImage.Source = sciezki[zdjecieNr];
+        }
+    }
+    ```
 4. Operowanie na zmiennych
    Załózmy ze mamy w aplikacji kontrolkę label która zlicza ilośc kliknięc w przycisk aby to zrobic nasz kod będzie wyglądał w następujący sposób:
    ```xml
