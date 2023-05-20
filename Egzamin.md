@@ -591,3 +591,25 @@ plik.cs - kod aplikacji
    }
    ```
    I to tyle, w taki sposób operujemy na danych, analogicznie do potrzebnej sytuacji
+5. Dodawanie zegara oraz daty, szanse są raczej małe że się pojawi ale dodam jakby się okazała taka potrzeba
+    W pliku MainPage.xaml dodaj kontrolkę Label, która będzie wyświetlać czas:
+    ```xml
+    <Label x:Name="dateTimeLabel" HorizontalOptions="Center" VerticalOptions="Center" FontSize="24"/>
+    ```
+    W pliku MainPage.xaml.cs dodaj kod do aktualizacji etykiety z bieżącą datą i czasem:
+    ```cs
+        public MainPage()
+        {
+            InitializeComponent();
+
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    DateTime currentDateTime = DateTime.Now;
+                    dateTimeLabel.Text = currentDateTime.ToString("dd.MM.yyyy HH:mm:ss");
+                });
+                return true;
+            });
+        }
+    ```
