@@ -613,3 +613,92 @@ plik.cs - kod aplikacji
             });
         }
     ```
+---
+# 3. Aplikacje Webowe
+W tej częsci będzie opis Reacta, jak tworzyc moduły, podstawowe funkcje takie jak useState/Useeffect/Ref/Map i inne przydatne.
+
+---
+## Tworzenie projektu i uruchomienie
+W terminalu wpisz poniższą komendę, aby zainicjalizować nowy projekt React z TypeScript:
+```
+npx create-react-app nazwa-projektu --template typescript
+```
+Przejdź do nowo utworzonego folderu projektu:
+
+```
+cd nazwa-projektu
+```
+W terminalu wpisz poniższą komendę, aby uruchomić projekt:
+```
+npm start
+```
+W przegladarce wejdz na strone localhost:3000
+## Dodawanie komponentow
+1. W folderze "src" utwórz nowy folder o nazwie "modules".
+2. Wewnątrz folderu "modules" możesz utworzyć pliki dla poszczególnych komponentów.
+3. Utwórz nowy plik .tsx w folderze "modules" dla swojego komponentu, na przykład dupa.tsx.
+4. W pliku dupa.tsx wpisz RFCE i kliknij enter, jezeli kod się nie wygeneruje dodaj ten:
+   ```tsx
+   import React from 'react'
+
+    function dupa() {
+    return (
+        <div>dupa</div>
+    )
+    }
+
+    export default dupa
+   ```
+5. W tym samym folderze utwórz plik `index.ts` a następnie exportuj swój moduł, na powyzyszym przykladzie będzie to wyglądało w następujący sposób:
+   ```ts
+    export {default as dupa} from './dupa'
+   ```
+6. Teraz możesz zaimportować komponenty z folderu "modules" w innych plikach.
+ Na przykład, jeśli masz plik App.tsx w folderze "src", możesz zaimplementować importowanie komponentu 
+    ```tsx
+    import dupa from './dupa'
+    ```
+    Ostatecznie aby komponent wyświetlił się na stronie musisz dodac zwykły tag w pkiku App.tsx, w tym wypadku będzie to:
+    ```tsx
+    <dupa/>
+    ```
+---
+## Wytłumaczenie podstawowych funkcji
+#### useState
+useState jest funkcją używaną w React z TypeScript (TS) do zarządzania stanem komponentów funkcyjnych. Pozwala to na przechowywanie danych wewnątrz komponentu i reagowanie na ich zmiany.<br>
+useState to hook, który pozwala zadeklarować zmienną stanu wewnątrz komponentu. Przyjmuje on początkową wartość stanu i zwraca parę: aktualną wartość stanu oraz funkcję, która pozwala na zmianę wartości stanu.
+
+Oto przykład użycia useState:
+```tsx
+import React, { useState } from 'react';
+
+const MyComponent: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={incrementCount}>Increment</button>
+    </div>
+  );
+};
+
+export default MyComponent;
+
+```
+W powyższym przykładzie używamy useState do zadeklarowania zmiennej stanu count oraz funkcji setCount, która pozwala na zmianę wartości count. Początkowo ustawiamy count na 0.
+Wewnątrz komponentu możemy użyć zmiennej count, aby wyświetlać aktualną wartość stanu. W przypadku przycisku "Increment" wywołujemy funkcję incrementCount, która zwiększa wartość count o 1, korzystając z setCount.
+
+Każde użycie setCount powoduje ponowne renderowanie komponentu z nową wartością stanu, co oznacza aktualizację widoku na podstawie nowych danych.
+
+Ważne jest, aby pamiętać, że useState może być używane wielokrotnie wewnątrz komponentu, aby zarządzać różnymi zmiennymi stanu.
+
+Podsumowując, useState jest hookiem w React z TypeScript, który pozwala na deklarację i aktualizację zmiennych stanu wewnątrz komponentu funkcyjnego. Używając useState, możemy reagować na zmiany stanu i aktualizować widok komponentu.
+##### Tak ten jak i następne opisy zostały wygenerowane przez chatGPT, nie chce mi się samemu tego pisac
+
+#### useEffect
+# TODO to
