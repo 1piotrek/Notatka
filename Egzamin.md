@@ -701,4 +701,209 @@ Podsumowując, useState jest hookiem w React z TypeScript, który pozwala na dek
 ##### Tak ten jak i następne opisy zostały wygenerowane przez chatGPT, nie chce mi się samemu tego pisac
 
 #### useEffect
-# TODO to
+
+##### Notka: Tego na egzaminie raczej nie będzie więc jak ktoś chce to moze pominąc tą częśc
+
+Metoda useEffect jest hookiem w React z TypeScript (TS), który pozwala na wykonywanie efektów ubocznych (side effects) w komponencie funkcyjnym. Efekty uboczne to akcje, które są wykonywane po renderowaniu komponentu, takie jak pobieranie danych z serwera, subskrypcje zdarzeń, manipulacja DOM itp.
+
+Głównym celem useEffect jest umożliwienie interakcji z zewnętrznymi zasobami lub zachowań, które nie są bezpośrednio związane z renderowaniem komponentu.
+
+Oto przykład użycia useEffect:
+```tsx
+import React, { useState, useEffect } from 'react';
+
+const Timer: React.FC = () => {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(prevSeconds => prevSeconds + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <div>
+      <p>Seconds: {seconds}</p>
+    </div>
+  );
+};
+
+export default Timer;
+
+```
+W tym przykładzie useEffect jest używany do utworzenia prostego licznika sekund. Po pierwszym renderowaniu komponentu, efekt uboczny jest uruchamiany, tworząc interwał, który co sekundę zwiększa wartość zmiennej seconds o 1.
+
+Funkcja przekazana do useEffect jako pierwszy argument jest wywoływana po renderowaniu komponentu. Tworzymy interwał za pomocą setInterval, który zwiększa wartość seconds i wywołuje funkcję setSeconds w każdej sekundzie.
+
+Pusta tablica zależności ([]) przekazana jako drugi argument do useEffect oznacza, że efekt zostanie wykonany tylko raz po pierwszym renderowaniu komponentu. W tym przypadku nie mamy żadnych zależności, które powodowałyby ponowne wykonanie efektu.
+
+Dodatkowo, wewnątrz funkcji przekazanej do useEffect, zwracamy funkcję czyszczącą (clearInterval(interval)), która jest wywoływana przed usunięciem komponentu. Dzięki temu interwał zostanie zatrzymany i nie będzie działał po usunięciu komponentu.
+
+Podsumowując, useEffect pozwala na wykonywanie efektów ubocznych w komponencie funkcyjnym. W tym prostszym przykładzie używamy go do tworzenia prostego licznika sekund, ale może być również używany do innych celów, takich jak pobieranie danych z serwera, subskrypcje zdarzeń, manipulacja DOM itp.
+
+#### useRef
+useRef() przyjmuje wartość i jest używany do stworzenia 'adresu', do którego możemy przypisać znacznik HTML.
+
+Komponent używający useRef:
+
+
+```jsx
+// Aby używać hook'ów należy je zaimportować
+import { useRef } from 'react';
+
+function Licznik() {
+    // buttonRef to jakiś pusty adres
+    const buttonRef = useRef(0);
+
+    // Po przypisaniu buttonRef to adres danego przycisku
+    // Natomiast buttonRef.current to w tym przypadku przycisk
+    return (
+        <div>
+            <button ref={buttonRef}>Kliknij</button>
+        </div>
+    );
+}
+```
+
+##### Obsługa inputów
+
+Wyróżniamy dwa, różne sposoby na obsługiwanie inputów:
+
+1. Używając useRef()
+2. Używajac useState()
+
+Różnią się tym, że używając useState() możemy programatycznie zmieniać wartość inputa, a używając useRef() możemy tą wartość programatycznie jedynie odczytać
+
+useRef:
+```jsx
+import { useRef } from 'react';
+function App() {
+  const inputRef = useRef(0);
+
+  // W ten sposób możemy odczytać wartość inputa używając inputRef.current.value
+  return <input ref={inputRef}>
+}
+export default App;
+```
+
+useState:
+```jsx
+import { useState } from 'react';
+function App() {
+  const [tekst, setTekst] = useState('');
+
+  // W ten sposób możemy:
+  // 1. odczytać wartość inputa używając zmiennej tekst
+  // 2. nadpisać wartość inputa używając funkcji setTekst
+  return <input value={tekst} onChange={(e) => setTekst(e.target.value)}>
+}
+export default App;
+
+
+```
+
+##### map
+
+Gdy nasze dane znajdują się w tablicy możemy je wypisać używając metody .map().
+
+Daje nam to możliwość generowania znaczników HTML jakbyśmy to robili używając pętli.
+
+Jeśli elementy mają być wypisane w liście należy użyć ul, bądź ol zależnie od polecenia
+
+```jsx
+const tablica = ['a', 'b', 'c'];
+
+// Wypełniamy znacznik <ol> danymi z tablicy
+<ol>
+    {tablica.map(element => (
+        <li key={element}>{element}</li>
+    ))}
+</ol>;
+// W ten sposób w naszym <ol> stworzymy 3 znaczniki <li>:
+// <li key="a">a</li>
+// <li key="b">b</li>
+// <li key="c">c</li>
+
+```
+
+---
+#### Aplikacja Webowa z egzaminu
+
+App.js
+```jsx
+import "./App.css";
+import { useState } from "react"; // Importujemy useState
+
+function App() {
+  const kursy = [
+    "Programowanie w C#",
+    "Angular dla początkujących",
+    "Kurs Django",
+  ]; // Tablica zawierająca 3 kursy
+
+  const [imie, setImie] = useState(""); // State do inputu z imieniem
+  const [kurs, setKurs] = useState(); // State do inputu z numerem kursu
+
+  function handleSubmit(e) {
+    // Funkcja wywołana po wysłaniu formularza
+    e.preventDefault(); // Blokujemy odświeżenie strony po przesłaniu formularza
+
+    console.log(imie);
+    if (kursy[kurs - 1]) {
+      console.log(kursy[kurs - 1]);
+    } else {
+      console.log("Nieprawidłowy numer kursu");
+    }
+  }
+
+  return (
+    <div className="App">
+      <h2>Liczba kursów {kursy.length}</h2> {/* Wypisujemy listę kursów */}
+      <ol>
+        {kursy.map((kurs) => (
+          <li key={kurs}>{kurs}</li> // Wypisanie elementów tablicy "kursy" za pomocą metody .map()
+        ))}
+      </ol>
+      <form onSubmit={handleSubmit}>
+        {" "}
+        {/* Formularz, który po przesłaniu wywołuje funkcję handleSubmit() */}
+        <div className="form-group">
+          <label htmlFor="imieInput">Imię i nazwisko:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="imieInput"
+            value={imie} // Przypisanie state "imie" do wartosci inputu
+            onChange={(e) => setImie(e.target.value)} // Zmiana wartości state "imie"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="kursInput">Numer kursu:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="kursInput"
+            value={kurs} // Przypisanie state "kurs" do wartości inputu
+            onChange={(e) => setKurs(e.target.value)} // Zmiana wartości state "kurs"
+          />
+        </div>
+        <button className="btn btn-primary">Zapisz do kursu</button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
+```
+
+App.css
+```css
+.App {
+  width: 60%; /* Ustawienie szerokości aplikacji na 60% body*/
+  margin: 0 auto; /* Wyśrodkowanie aplikacji */
+}
+```
