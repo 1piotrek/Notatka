@@ -1,4 +1,4 @@
-# Egzamin zawodowy inf.04
+ # Egzamin zawodowy inf.04
 ---
 ## Rozdziały:
 1. Konsolowe
@@ -464,8 +464,42 @@ namespace Notatka // Note: actual namespace depends on the project name.
 }
 ```
 * Tutaj przykładowe zadanie skoncentrowane głównie na klasie, bez części z 3 zadania na egzaminie
-## TODO: Dokończ kod z zadaniem 3
-### TODO: Zrób ktoś kod z c++
+
+#### Nie wiem gdzie ten kod wkleić, nie wiem co on robi ale go dodam
+```c++
+class osoba{
+private:
+    int id;
+    string name;
+    static int inkrementacja;
+public:
+    osoba(): id(0), name(""){
+    inkrementacja++;
+    }
+    osoba(int osobaid, string osobaImie): id(osobaid), name(osobaImie){
+        inkrementacja++;
+    }
+    osoba(const osoba& other){
+        id= other.id;
+        name=other.name;
+        inkrementacja++;
+    }
+    static int getInstancesCount(){
+        return inkrementacja;
+    }
+    void wpisanie(string otherName) {
+        if (name.empty()) {
+            cout << "Brak danych" << endl;
+        } else {
+            cout << "Cześć " << otherName << ", mam na imię " << name << endl;
+        }
+    }
+
+};
+int osoba::inkrementacja=0;
+
+```
+
 ---
 # 2. Aplikacje Mobilne
 W tej części będzie opis środowiska xamarin oraz parę przykładów kodu z egzaminów zawodowych, nie będę sam dodawał javy/kotlina/flutter, jezeli ktoś chce dodac musi zrobic to na własną rękę
