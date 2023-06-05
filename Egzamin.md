@@ -418,7 +418,47 @@ Kod w c#
 ```
 * Tutaj przykładowe zadanie skoncentrowane głównie na klasie, bez części z 3 zadania na egzaminie
 **TODO: Dokończ kod z zadaniem 3**
-**TODO: Zrób ktoś kod z c++**
+kod C++
+```
+#include <iostream>
+
+using namespace std;
+
+class Notatka{
+    private:
+        static int licznik;
+        int indentyfikator;
+    public:
+        string tytul;
+        string tresc;
+
+        Notatka(string tytulK, string trescK){
+            indentyfikator = ++licznik;
+            tytul = tytulK;
+            tresc = trescK;
+        };
+        void Wyswietl(){
+            cout<<"Tytul: "<<tytul<<"  Tresc: " << tresc<<endl;
+        };
+        void Wypisz(){
+
+            cout<<"Licznik: "<<licznik<<"; Identyfikator:"<<indentyfikator<<"; Tytul: "<<tytul<<"; Tresc: "<<tresc<<"; "<<endl;
+        };
+};
+int Notatka::licznik=0;
+int main()
+{
+    cout << "Obsluga Notatek" << endl;
+    Notatka notatka1("kutas","dupadupa");
+    notatka1.Wyswietl();
+    notatka1.Wypisz();
+    cout<<endl;
+    Notatka notatka2("maciek","tochuj");
+    notatka2.Wyswietl();
+    notatka2.Wypisz();
+    return 0;
+}
+```
 ---
 # 2. Aplikacje Mobilne
 W tej części będzie opis środowiska xamarin oraz parę przykładów kodu z egzaminów zawodowych, nie będę sam dodawał javy/kotlina/flutter, jezeli ktoś chce dodac musi zrobic to na własną rękę
